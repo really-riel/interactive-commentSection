@@ -68,6 +68,7 @@ textarea {
   resize: none;
   height: 90px;
   width: 100%;
+  font-size: inherit;
 }
 
 .userImg {

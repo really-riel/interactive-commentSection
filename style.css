@@ -57,7 +57,7 @@ button {
   color: var(--Moderate-blue);
   font-size: inherit;
   margin: 10px 0 5px;
-  padding: 5px;
+  padding: 10px 15px;
   gap: 15px;
   border-radius: 8px;
   border: none;
@@ -106,6 +106,7 @@ textarea {
 }
 .commentText {
   grid-area: pr;
+  word-break: break-all;
 }
 .timeOfComment {
   color: var(--TEXT_COLOR);
@@ -118,7 +119,7 @@ textarea {
 
 .scoreBtn {
   grid-area: sb;
-  display: ;
+  max-width: 120px;
 }
 
 .replyBtn {
@@ -150,8 +151,6 @@ textarea {
   width: 100%;
 }
 
-.coverImgBtn img {
-}
 .inputReplyBtn {
   background-color: var(--Moderate-blue);
   color: var(--White);
@@ -169,9 +168,7 @@ textarea {
   width: 100%;
 }
 
-.reply {
-  word-break: break-all;
-  word-wrap: break-word;
+.reply:not(.edit) {
   margin-top: 10px;
   background-color: var(--White);
   padding: 10px;
@@ -182,15 +179,40 @@ textarea {
     "pr pr pr pr"
     "sb . del ed ";
 }
+.reply {
+  margin-top: 10px;
+  background-color: var(--White);
+  padding: 10px;
+  border-radius: 10px;
+  display: grid;
+
+  grid-template-areas:
+    "hd hd hd hd"
+    "pr pr pr pr"
+    ". . . up"
+    "sb . del ed";
+}
+.updateBtn {
+  grid-area: up;
+  background-color: var(--Moderate-blue);
+  color: var(--White);
+}
+.replyTextArea {
+  margin-top: 10px;
+  grid-area: pr;
+}
 
 .deleteBtn {
   grid-area: del;
+
   margin-right: 10px;
   background-color: transparent;
+  gap: 5px;
 }
 .editBtn {
   grid-area: ed;
   background-color: transparent;
+  gap: 5px;
 }
 
 .you {
@@ -203,6 +225,21 @@ textarea {
   background-color: var(--Moderate-blue);
   color: var(--White);
   padding: 10px;
+}
+.addToScore {
+  width: 20px;
+  height: 20px;
+}
+.subtractFromScore {
+  width: 20px;
+  height: 10px;
+}
+.addToScore:active,
+.addToScore:focus,
+.subtractFromScore:active,
+.subtractFromScore:focus {
+  color: var(--Moderate-blue);
+  transform: scale(0.8);
 }
 
 .deletePopUp {
@@ -244,12 +281,18 @@ textarea {
   background-color: var(--DELETE_BTN_COLOR);
   color: var(--White);
 }
+.editTextArea {
+  height: 120px;
+}
 
 /* utilities */
 
 .highlight {
   color: var(--Moderate-blue);
   font-weight: 700;
+}
+.opacity {
+  opacity: 0.5;
 }
 
 @media screen and (min-width: 768px) {
@@ -260,10 +303,9 @@ textarea {
       "sb pr pr pr";
   }
   .scoreBtn {
+    max-width: 50px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     margin-right: 10px;
   }
   .reply {

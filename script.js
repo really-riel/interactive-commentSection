@@ -143,7 +143,7 @@ const loadFirstReply = () => {
         <span class="timeOfComment">${firstReply.createdAt}</span>
       </div>
   
-      <p class="commentText"><span class="highlight">@${firstReply.replyingTo}</span>${firstReply.content}</p>
+      <p class="commentText"><span class="highlight">@${firstReply.replyingTo}, </span>${firstReply.content}</p>
       <button class="scoreBtn">
         <img src="images/icon-plus.svg" alt="add to score" class="addToScore" />
         ${firstReply.score}
@@ -176,7 +176,7 @@ const loadCurrentUserReply = () => {
 
   secondcomment.lastElementChild.lastElementChild.lastElementChild.firstElementChild.innerHTML += `
   
-  <li class="reply" id="${currentUserReply.id}">
+  <li class="reply" id="currentUser">
                 <div class="commentHeader">
                   <img
                     src="${currentUserReply.user.image.webp}"
@@ -188,17 +188,14 @@ const loadCurrentUserReply = () => {
                   <span class="you">you</span>
                   <span class="timeOfComment">${currentUserReply.createdAt}</span>
                 </div>
-                <p class="commentText"><span class="highlight">@${currentUserReply.replyingTo}</span>
-                  ${currentUserReply.content}
+                <p class="commentText"><span class="highlight">@${currentUserReply.replyingTo}, </span>${currentUserReply.content}
                 </p>
                 <button class="scoreBtn">
                   <img
                     src="images/icon-plus.svg"
                     alt="add to score"
                     class="addToScore"
-                  />
-                  ${currentUserReply.score}
-                  <img
+                  />${currentUserReply.score}<img
                     src="images/icon-minus.svg"
                     alt="subtract from score"
                     class="subtractFromScore"
@@ -209,9 +206,7 @@ const loadCurrentUserReply = () => {
                     src="images/icon-delete.svg"
                     alt="delete Button"
                     srcset=""
-                  />
-                  Delete
-                </button>
+                  />Delete</button>
                 <button class="editBtn">
                   <img
                     src="images/icon-edit.svg"
@@ -277,6 +272,10 @@ const carryOutSpecificFunctions = (e) => {
     addToScore(e.target);
   } else if (e.target.classList.contains("subtractFromScore")) {
     substractFromScore(e.target);
+  } else if (e.target.classList.contains("editBtn")) {
+    displayEditMode(e.target);
+  } else if (e.target.classList.contains("updateBtn")) {
+    updateEditedReply(e.target);
   }
 };
 
@@ -309,6 +308,7 @@ const createReplyInputSection = (replyInputSectionCreationButton) => {
   
   `;
   replyInputSectionCreationButton.disabled = true;
+  replyInputSectionCreationButton.classList.add("opacity");
   const textarea = commentEntity.querySelector(".replyTextArea");
   const userName =
     commentEntity.parentElement.parentElement.querySelector(".name");
@@ -350,7 +350,7 @@ const postReply = (replyBtn) => {
                   <span class="you">you</span>
                   <span class="timeOfComment">${currentUserReply.createdAt}</span>
                 </div>
-                <p class="commentText"><span class="highlight">@${replyingTo}</span>${text}
+                <p class="commentText"><span class="highlight">@${replyingTo}, </span>${text}
                 </p>
                 <button class="scoreBtn">
                   <img
@@ -368,9 +368,7 @@ const postReply = (replyBtn) => {
                     src="images/icon-delete.svg"
                     alt="delete Button"
                     srcset=""
-                  />
-                  Delete
-                </button>
+                  />Delete</button>
                 <button class="editBtn">
                   <img
                     src="images/icon-edit.svg"
@@ -385,6 +383,7 @@ const postReply = (replyBtn) => {
   const replyInputSectionCreationButton =
     replyForm.parentElement.previousElementSibling.lastElementChild;
   replyInputSectionCreationButton.disabled = false;
+  replyInputSectionCreationButton.classList.remove("opacity");
   console.log(replyInputSectionCreationButton);
   replyForm.remove();
 };
@@ -521,6 +520,124 @@ const substractFromScore = (minusBtn) => {
                     alt="subtract from score"
                     class="subtractFromScore"
                   />
+  
+  `;
+};
+
+const displayEditMode = (editBtn) => {
+  //do
+  const li = editBtn.parentElement;
+  console.log(li);
+  li.classList.add("edit");
+  const text = li.firstElementChild.nextElementSibling.innerText.trim();
+  console.log(text);
+  li.innerHTML = `
+  
+  <div class="commentHeader">
+                  <img
+                    src="${myJson.currentUser.image.webp}"
+                    alt="${myJson.currentUser.username}"
+                    srcset=""
+                    class="userImg"
+                  />
+                  <span class="name">${myJson.currentUser.username}</span>
+                  <span class="you">you</span>
+                  <span class="timeOfComment">secs ago</span>
+                </div>
+               
+                <textarea
+                    name="input Reply"
+                    id=""
+                    cols=""
+                    rows=""
+                    placeholder=""
+                    class="replyTextArea edit editTextArea"
+                ></textarea>
+                
+                  <button class="updateBtn">UPDATE</button>
+                
+       
+        <button class="scoreBtn">
+                  <img
+                    src="images/icon-plus.svg"
+                    alt="add to score"
+                    class="addToScore"
+                  />0<img
+                    src="images/icon-minus.svg"
+                    alt="subtract from score"
+                    class="subtractFromScore"
+                  />
+                </button>
+                <button class="deleteBtn">
+                  <img
+                    src="images/icon-delete.svg"
+                    alt="delete Button"
+                    srcset=""
+                  />
+                  Delete
+                </button>
+                <button class="editBtn">
+                  <img
+                    src="images/icon-edit.svg"
+                    alt="edit button"
+                    srcset=""
+                  />Edit
+                </button>
+  
+  `;
+  const textArea = li.querySelector(".replyTextArea");
+  textArea.value = text;
+};
+
+const updateEditedReply = (updateBtn) => {
+  const li = updateBtn.parentElement;
+  const allText =
+    updateBtn.parentElement.firstElementChild.nextElementSibling.value;
+  const replyingTo = allText.split(",").splice(0, 1).toString();
+  const text = allText.split(",").splice(1, 1).toString();
+
+  console.log(text);
+  li.classList.remove("edit");
+  li.innerHTML = `
+  
+  <div class="commentHeader">
+                  <img
+                    src="${myJson.currentUser.image.webp}"
+                    alt="riel"
+                    srcset=""
+                    class="userImg"
+                  />
+                  <span class="name">${myJson.currentUser.username}</span>
+                  <span class="you">you</span>
+                  <span class="timeOfComment">secs ago</span>
+                </div>
+                <p class="commentText"><span class="highlight">${replyingTo}, </span>${text}
+                </p>
+                <button class="scoreBtn">
+                  <img
+                    src="images/icon-plus.svg"
+                    alt="add to score"
+                    class="addToScore"
+                  />0<img
+                    src="images/icon-minus.svg"
+                    alt="subtract from score"
+                    class="subtractFromScore"
+                  />
+                </button>
+                <button class="deleteBtn">
+                  <img
+                    src="images/icon-delete.svg"
+                    alt="delete Button"
+                    srcset=""
+                  />Delete</button>
+                <button class="editBtn">
+                  <img
+                    src="images/icon-edit.svg"
+                    alt="edit button"
+                    srcset=""
+                  />Edit
+                </button>
+              </li>
   
   `;
 };

@@ -71,8 +71,6 @@ const myJson = {
   ],
 };
 
-console.log(myJson.comments[1].replies);
-
 const commentLists = document.querySelector(".commentLists");
 const main = document.querySelector(".main");
 const initApp = () => {
@@ -275,6 +273,10 @@ const carryOutSpecificFunctions = (e) => {
   } else if (e.target.classList.contains("yesDeleteBtn")) {
     console.log("only God can help us");
     deleteReply(e.target);
+  } else if (e.target.classList.contains("addToScore")) {
+    addToScore(e.target);
+  } else if (e.target.classList.contains("subtractFromScore")) {
+    substractFromScore(e.target);
   }
 };
 
@@ -478,4 +480,47 @@ const createNewComments = (e) => {
   `;
   commentLists.appendChild(li);
   textArea.value = "";
+};
+
+const addToScore = (plusBtn) => {
+  const score = parseFloat(plusBtn.parentElement.innerText.trim());
+  if (plusBtn.classList.contains("disabled")) return;
+
+  plusBtn.parentElement.innerHTML = `
+  
+                  <img
+                    src="images/icon-plus.svg"
+                    alt="add to score"
+                    class="addToScore disabled"
+                   
+                  />${score + 1}<img
+                    src="images/icon-minus.svg"
+                    alt="subtract from score"
+                    class="subtractFromScore"
+                  />
+
+
+  `;
+};
+
+const substractFromScore = (minusBtn) => {
+  const plusBtn = minusBtn.previousElementSibling;
+  if (!plusBtn.classList.contains("disabled")) return;
+
+  const score = parseFloat(minusBtn.parentElement.innerText.trim());
+
+  minusBtn.parentElement.innerHTML = `
+  
+  <img
+                    src="images/icon-plus.svg"
+                    alt="add to score"
+                    class="addToScore"
+                   
+                  />${score - 1}<img
+                    src="images/icon-minus.svg"
+                    alt="subtract from score"
+                    class="subtractFromScore"
+                  />
+  
+  `;
 };

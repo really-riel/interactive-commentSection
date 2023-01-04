@@ -295,7 +295,7 @@ const createReplyInputSection = (replyInputSectionCreationButton) => {
             ></textarea>
             <div class="coverImgBtn">
                 <img
-                src="/images/avatars/image-juliusomo.png"
+                src="${myJson.currentUser.image.webp}"
                 alt=""
                 srcset=""
                 class="userImg"

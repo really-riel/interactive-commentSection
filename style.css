@@ -1,0 +1,248 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+img {
+  display: block;
+}
+html {
+  font-size: 17px;
+  font-family: "Rubik", sans-serif;
+}
+
+:root {
+  --Moderate-blue: hsl(238, 40%, 52%);
+  --DELETE_BTN_COLOR: hsl(358, 79%, 66%);
+  --Lightgrayishblue: hsl(239, 57%, 85%);
+  --Palered: hsl(357, 100%, 86%);
+
+  --NAME_COLOR: hsl(212, 24%, 26%);
+  --TEXT_COLOR: hsl(211, 10%, 45%);
+  --BODY_BGCOLOR: hsl(223, 19%, 93%);
+  --Verylightgray: hsl(228, 33%, 97%);
+  --White: hsl(0, 0%, 100%);
+  --POP_UP_BGCOLOR: hsla(211, 10%, 45%, 0.652);
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: var(--BODY_BGCOLOR);
+  position: relative;
+}
+
+main {
+  width: 90%;
+
+  margin: 20px auto;
+}
+ul {
+  list-style-type: none;
+}
+li {
+  margin-bottom: 10px;
+}
+
+p {
+  color: var(--TEXT_COLOR);
+}
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--BODY_BGCOLOR);
+  color: var(--Moderate-blue);
+  font-size: inherit;
+  margin: 10px 0 5px;
+  padding: 5px;
+  gap: 15px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 700;
+}
+textarea {
+  border-radius: 5px;
+  resize: none;
+  height: 90px;
+  width: 100%;
+}
+
+.userImg {
+  width: 40px;
+  height: 40px;
+}
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.commentContentContainer {
+  display: grid;
+  gap: 10px;
+}
+
+.commentContent {
+  background-color: var(--White);
+  padding: 10px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-areas:
+    "hd hd hd"
+    "pr pr pr"
+    "sb . rp";
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  grid-area: hd;
+}
+.commentText {
+  grid-area: pr;
+}
+.timeOfComment {
+  color: var(--TEXT_COLOR);
+}
+
+.name {
+  color: var(--NAME_COLOR);
+  font-weight: 700;
+}
+
+.scoreBtn {
+  grid-area: sb;
+}
+
+.replyBtn {
+  background-color: transparent;
+  border: none;
+  gap: 5px;
+  grid-area: rp;
+}
+
+.replyInputForm {
+  background-color: var(--White);
+  padding: 10px 15px 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.replyInputForm textarea {
+  font-family: inherit;
+  font-weight: 500;
+  padding: 15px;
+}
+.coverImgBtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.coverImgBtn img {
+}
+.inputReplyBtn {
+  background-color: var(--Moderate-blue);
+  color: var(--White);
+  padding: 10px;
+}
+
+.replyContainer {
+  display: flex;
+  gap: 15px;
+}
+.verticalLine {
+  border-left: 2px solid var(--Lightgrayishblue);
+}
+.replyContentCover {
+  width: 100%;
+}
+
+.reply {
+  word-break: break-all;
+  word-wrap: break-word;
+  margin-top: 10px;
+  background-color: var(--White);
+  padding: 10px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-areas:
+    "hd hd hd hd"
+    "pr pr pr pr"
+    "sb . del ed ";
+}
+
+.deleteBtn {
+  grid-area: del;
+  margin-right: 10px;
+}
+.editBtn {
+  grid-area: ed;
+}
+
+.you {
+  background-color: var(--Moderate-blue);
+  color: var(--White);
+  padding: 0 5px 5px;
+}
+
+.addCommentBtn {
+  background-color: var(--Moderate-blue);
+  color: var(--White);
+  padding: 10px;
+}
+
+.deletePopUp {
+  position: fixed;
+  background-color: var(--POP_UP_BGCOLOR);
+
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-content: center;
+}
+
+.deleteOptionsDisplay {
+  background-color: var(--White);
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+.deleteOptionsDisplay h3 {
+  color: var(--NAME_COLOR);
+  margin-bottom: 15px;
+}
+.buttonContainer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cancelBtn {
+  padding: 10px 15px;
+  background-color: var(--TEXT_COLOR);
+  color: var(--White);
+}
+.yesDeleteBtn {
+  padding: 10px 15px;
+  background-color: var(--DELETE_BTN_COLOR);
+  color: var(--White);
+}
+
+/* utilities */
+
+.highlight {
+  color: var(--Moderate-blue);
+  font-weight: 700;
+}

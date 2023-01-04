@@ -1,4 +1,4 @@
-import myJson from "data.json" assert { type: "json" };
+import myJson from "/interactive-commentSection/data.json" assert { type: "json" };
 
 console.log(myJson.comments[1].replies);
 

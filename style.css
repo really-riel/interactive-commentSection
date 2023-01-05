@@ -117,7 +117,7 @@ textarea:focus {
 }
 .commentText {
   grid-area: pr;
-  word-break: break-all;
+  word-break: break-word;
 }
 .timeOfComment {
   color: var(--TEXT_COLOR);

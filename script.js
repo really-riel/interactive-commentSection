@@ -256,7 +256,10 @@ const createAddCommentSection = () => {
 
 const carryOutSpecificFunctions = (e) => {
   e.preventDefault();
+  e.stopPropagation();
+
   console.log(e.target);
+
   if (e.target.classList.contains("replyBtn")) {
     createReplyInputSection(e.target);
   } else if (e.target.classList.contains("inputReplyBtn")) {
@@ -275,7 +278,7 @@ const carryOutSpecificFunctions = (e) => {
   } else if (e.target.classList.contains("editBtn")) {
     displayEditMode(e.target);
   } else if (e.target.classList.contains("updateBtn")) {
-    updateEditedReply(e.target);
+    postEditedReply(e.target);
   }
 };
 
@@ -291,7 +294,7 @@ const createReplyInputSection = (replyInputSectionCreationButton) => {
                 id=""
                 cols=""
                 rows=""
-                placeholder=""
+                placeholder="add your Reply"
                 class="replyTextArea"
             ></textarea>
             <div class="coverImgBtn">
@@ -313,8 +316,7 @@ const createReplyInputSection = (replyInputSectionCreationButton) => {
   const userName =
     commentEntity.parentElement.parentElement.querySelector(".name");
   console.log(userName.innerText);
-  textarea.innerText = `@${userName.innerText},
-  `;
+  textarea.innerText = `@${userName.innerText}, `;
 };
 
 const postReply = (replyBtn) => {
@@ -322,16 +324,22 @@ const postReply = (replyBtn) => {
   const replyForm = replyBtn.parentElement.parentElement;
   const textAreaContent =
     replyBtn.parentElement.previousElementSibling.value.trim();
-  const textArray = textAreaContent.split(",").splice(1, 1);
-  const text = textArray.toString();
-  console.log(textArray.toString());
+
+  let text;
 
   const replyingTo =
     replyBtn.parentElement.parentElement.parentElement.previousElementSibling.firstElementChild.querySelector(
       ".name"
     ).innerText;
 
-  console.log(replyingTo);
+  if (textAreaContent.split(" ").indexOf(`@${replyingTo},`) === 0) {
+    console.log("work");
+    const textArray = textAreaContent.split(",").splice(1, 1);
+
+    text = textArray.toString();
+  } else {
+    text = textAreaContent;
+  }
   const currentUserReply = myJson.comments[1].replies[1];
   const replyDisplay =
     replyBtn.parentElement.parentElement.parentElement.parentElement
@@ -526,6 +534,8 @@ const substractFromScore = (minusBtn) => {
 
 const displayEditMode = (editBtn) => {
   //do
+  disableAllReplyButton();
+  if (editBtn.classList.contains("clicked")) return;
   const li = editBtn.parentElement;
   console.log(li);
   li.classList.add("edit");
@@ -576,7 +586,7 @@ const displayEditMode = (editBtn) => {
                   />
                   Delete
                 </button>
-                <button class="editBtn">
+                <button class="editBtn clicked opacity">
                   <img
                     src="images/icon-edit.svg"
                     alt="edit button"
@@ -589,12 +599,21 @@ const displayEditMode = (editBtn) => {
   textArea.value = text;
 };
 
-const updateEditedReply = (updateBtn) => {
+const postEditedReply = (updateBtn) => {
+  enableAllReplyButton();
   const li = updateBtn.parentElement;
   const allText =
-    updateBtn.parentElement.firstElementChild.nextElementSibling.value;
-  const replyingTo = allText.split(",").splice(0, 1).toString();
-  const text = allText.split(",").splice(1, 1).toString();
+    updateBtn.parentElement.firstElementChild.nextElementSibling.value.trim();
+  //console.log(allText.split("").innerText("@"));
+  let replyingTo;
+  let text;
+  if (allText.split("").indexOf("@") === 0) {
+    replyingTo = allText.split(",").splice(0, 1).toString() + ",";
+    text = allText.split(",").splice(1, 1).toString();
+  } else {
+    replyingTo = "";
+    text = allText;
+  }
 
   console.log(text);
   li.classList.remove("edit");
@@ -611,7 +630,7 @@ const updateEditedReply = (updateBtn) => {
                   <span class="you">you</span>
                   <span class="timeOfComment">secs ago</span>
                 </div>
-                <p class="commentText"><span class="highlight">${replyingTo}, </span>${text}
+                <p class="commentText"><span class="highlight">${replyingTo}</span>${text}
                 </p>
                 <button class="scoreBtn">
                   <img
@@ -640,4 +659,20 @@ const updateEditedReply = (updateBtn) => {
               </li>
   
   `;
+};
+
+const disableAllReplyButton = () => {
+  const replyBtns = commentLists.querySelectorAll(".replyBtn");
+  replyBtns.forEach((replyBtn) => {
+    replyBtn.disabled = true;
+    replyBtn.classList.add("opacity");
+  });
+};
+
+const enableAllReplyButton = () => {
+  const replyBtns = commentLists.querySelectorAll(".replyBtn");
+  replyBtns.forEach((replyBtn) => {
+    replyBtn.disabled = false;
+    replyBtn.classList.remove("opacity");
+  });
 };

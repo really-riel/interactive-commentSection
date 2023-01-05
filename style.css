@@ -71,6 +71,16 @@ textarea {
   width: 100%;
   font-size: inherit;
   color: var(--TEXT_COLOR);
+  outline: none;
+  caret-color: var(--Moderate-blue);
+}
+textarea:active,
+textarea:hover,
+textarea:focus {
+  border: 2px solid var(--Moderate-blue);
+}
+.commentLists {
+  transition: all 0.3s ease;
 }
 
 .userImg {
